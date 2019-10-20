@@ -67,6 +67,11 @@
     console.log(snapshot.val())
   })
   console.log( database.ref('messages').on('child_added', snapshot => console.log(snapshot.val())))
+  console.log( database.ref('messages').on('child_removed', snapshot => console.log(snapshot.val())))
+  /**
+   * database.ref('messages').child('L8uKkjfnj_484nWkhjd').update({text:'She wont be in danger'})
+   * database.ref('messages').child('L8uKkjfnj_484nWkhjd').child('text').set('She wont be in danger')
+   */
 
   new Vue({
     el: "#chat",
@@ -81,6 +86,8 @@
     methods: {
       storeMessage () {
         messagesRef.push({text: this.messageText, nickname: this.nickname})
+        //console.log( database.ref('messages').push().set({text: this.messageText, nickname: this.nickname})
+          //console.log( database.ref('messages').push({text: this.messageText, nickname: this.nickname})
         this.messageText = ''
       },
       deleteMessage (message) {
@@ -102,6 +109,7 @@
 
     created () {
       // value = snapshot.val() | key = snapshot.key
+     // messagesRef.on('child_added',snapshot => this.messages.push(snapshot.val()))
       messagesRef.on('child_added', snapshot => {
         this.messages.push({...snapshot.val(), id: snapshot.key})
         if (snapshot.val().nickname !== this.nickname) {

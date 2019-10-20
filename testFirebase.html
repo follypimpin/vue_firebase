@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://unpkg.com/vue"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.12.0/firebase.js"></script>
+    <title>Title</title>
+</head>
+<body>
+<script type="module">
+import {database} from './config.js'
+const messagesRef = database.ref('message');
+messagesRef.on('value', function (snapshot) {
+    console.log(snapshot.val());
+});
+</script>
+</body>
+</html>
